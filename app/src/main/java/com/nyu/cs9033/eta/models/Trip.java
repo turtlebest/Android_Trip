@@ -1,21 +1,26 @@
+/**
+ * Trip model.
+ *
+ * @author      Jessica Huang
+ * @version     1.1
+ */
 package com.nyu.cs9033.eta.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Date;
-
-/*import com.nyu.cs9033.eta.models.Person;*/
 
 public class Trip implements Parcelable {
 
 	private static final String TAG = "CreateTrip";
 
+	private long tid;
 	private String name;
-	private String location;
-	private Date time;
+	private Location location;
+	private String time;
 	private List<Person> friendList;
 	
 	/**
@@ -39,10 +44,10 @@ public class Trip implements Parcelable {
 	 * Model fields.
 	 */
 	public Trip(Parcel p) {
+		tid = p.readLong();
 		name = p.readString();
-		location = p.readString();
-		long tmpTime = p.readLong();
-		time = tmpTime != -1 ? new Date(tmpTime) : null;
+		location = p.readParcelable(getClass().getClassLoader());
+		time = p.readString();
 		if (p.readByte() == 0x01) {
 			friendList = new ArrayList<Person>();
 			p.readList(friendList, Person.class.getClassLoader());
@@ -57,7 +62,8 @@ public class Trip implements Parcelable {
 	 * @param name  Add arbitrary number of arguments to
 	 * instantiate Trip class based on member variables.
 	 */
-	public Trip(String name, String location, Date time, List<Person> friendList) {
+	public Trip(long tid, String name, Location location, String time, List<Person> friendList) {
+		this.tid = tid;
 		this.name = name;
 		this.location = location;
 		this.time = time;
@@ -82,9 +88,10 @@ public class Trip implements Parcelable {
 	 */
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeLong(tid);
 		dest.writeString(name);
-		dest.writeString(location);
-		dest.writeLong(time != null ? time.getTime() : -1L);
+		dest.writeParcelable(location, flags);
+		dest.writeString(time);
 		if (friendList == null) {
 			dest.writeByte((byte) (0x00));
 		} else {
@@ -96,20 +103,44 @@ public class Trip implements Parcelable {
 	/**
 	 * Feel free to add additional functions as necessary below.
 	 */
+	public long getTid(){
+		return tid;
+	}
+
+	public void setTid(long tid){
+		this.tid = tid;
+	}
+
 	public String getName(){
 		return name;
 	}
 
-	public String getLocation(){
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public Location getLocation(){
 		return location;
 	}
 
-	public Date getTime(){
+	public void setLocation(Location location){
+		this.location = location;
+	}
+
+	public String getTime(){
 		return time;
+	}
+
+	public void setTime(String time){
+		this.time = time;
 	}
 
 	public List<Person> getFriendList(){
 		return friendList;
+	}
+
+	public void setFriendList(List<Person> friendList){
+		this.friendList = friendList;
 	}
 
 	/**

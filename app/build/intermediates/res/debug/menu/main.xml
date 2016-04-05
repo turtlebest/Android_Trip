@@ -5,8 +5,5 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
-
-
-
 </menu>
 <!-- From: file:/Users/jessicahuang/Documents/workspace/ETA_CS9033_HuangShuoWen/app/src/main/res/menu/main.xml -->

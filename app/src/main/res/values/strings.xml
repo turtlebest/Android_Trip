@@ -5,6 +5,7 @@
     <string name="mainTitle">Create your trip!</string>
     <string name="createButton">Create trip</string>
     <string name="viewButton">View trip</string>
+
     <!--Create Trip Page-->
     <string name="trip_name">Trip name</string>
     <string name="trip_location">location</string>
@@ -16,8 +17,9 @@
     <string name="friend_phone">phone number</string>
     <string name="create_trip">Create</string>
     <string name="cancel_trip">Cancel</string>
+
     <!--View Trip Page-->
-    <string name="viewTitle">My Trip</string>
+    <string name="viewTitle">Trip</string>
     <string name="vTrip_name">Trip name</string>
     <string name="vTrip_location">location</string>
     <string name="vTrip_time">time</string>
@@ -26,4 +28,13 @@
     <string name="vFriend_location">location</string>
     <string name="vFriend_phone">phone number</string>
     <string name="vBack">Back</string>
+
+    <!--View Trip History Page-->
+    <string name="History_view">View</string>
+    <string name="History_trip">Trip Name:</string>
+
+    <!--View Friend Item Page-->
+    <string name="iFriend_name">Name</string>
+    <string name="iFriend_phone">Phone</string>
+
 </resources>

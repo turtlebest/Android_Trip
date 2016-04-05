@@ -6,6 +6,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <!-- From: file:/Users/jessicahuang/Documents/workspace/ETA_CS9033_HuangShuoWen/app/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="History_trip">Trip Name:</string>
+    <string name="History_view">View</string>
     <string name="action_settings">Settings</string>
     <string name="add_friend">Add Friend</string>
     <string name="app_name">ETA</string>
@@ -16,6 +18,8 @@
     <string name="friend_location">location</string>
     <string name="friend_name">name</string>
     <string name="friend_phone">phone number</string>
+    <string name="iFriend_name">Name</string>
+    <string name="iFriend_phone">Phone</string>
     <string name="mainTitle">Create your trip!</string>
     <string name="trip_date">Date</string>
     <string name="trip_location">location</string>
@@ -29,7 +33,7 @@
     <string name="vTrip_name">Trip name</string>
     <string name="vTrip_time">time</string>
     <string name="viewButton">View trip</string>
-    <string name="viewTitle">My Trip</string>
+    <string name="viewTitle">Trip</string>
     <!-- From: file:/Users/jessicahuang/Documents/workspace/ETA_CS9033_HuangShuoWen/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Light">

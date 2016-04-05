@@ -1,3 +1,9 @@
+/**
+ * Person model.
+ *
+ * @author      Jessica Huang
+ * @version     1.1
+ */
 package com.nyu.cs9033.eta.models;
 
 import android.os.Parcel;
@@ -7,9 +13,10 @@ public class Person implements Parcelable {
 	
 	// Member fields should exist here, what else do you need for a person?
 	// Please add additional fields
+	private long pid;
 	private String name;
 	private String phoneNumber;
-	private String curLocation;
+	private Location curLocation;
 	
 	/**
 	 * Parcelable creator. Do not modify this function.
@@ -32,8 +39,9 @@ public class Person implements Parcelable {
 	 * Model fields.
 	 */
 	public Person(Parcel p) {
+		pid = p.readLong();
 		name = p.readString();
-		curLocation = p.readString();
+		curLocation = p.readParcelable(getClass().getClassLoader());
 		phoneNumber = p.readString();
 	}
 	
@@ -43,7 +51,8 @@ public class Person implements Parcelable {
 	 * @param name Add arbitrary number of arguments to
 	 * instantiate Person class based on member variables.
 	 */
-	public Person(String name, String curLocation, String phoneNumber) {
+	public Person(long pid, String name, Location curLocation, String phoneNumber) {
+		this.pid = pid;
 		this.name = name;
 		this.curLocation = curLocation;
 		this.phoneNumber = phoneNumber;
@@ -64,27 +73,47 @@ public class Person implements Parcelable {
 	 */
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeLong(pid);
 		dest.writeString(name);
-		dest.writeString(curLocation);
+		dest.writeParcelable(curLocation, flags);
 		dest.writeString(phoneNumber);
 	}
 
 	/**
 	 * Feel free to add additional functions as necessary below.
 	 */
+	public long getPid(){
+		return pid;
+	}
+
+	public void setPid(long pid){
+		this.pid = pid;
+	}
+
 	public String getName(){
 		return name;
+	}
+
+	public void setName(String name){
+		this.name = name;
 	}
 
 	public String getPhoneNumber(){
 		return phoneNumber;
 	}
 
-	//public void setMy_Location(String my_Location){this.my_Location = my_Location;}
+	public void setPhoneNumber(String phoneNumber){
+		this.phoneNumber = phoneNumber;
+	}
 
-	public String getCurLocation(){
+	public Location getCurLocation(){
 		return curLocation;
 	}
+
+	public void setCurLocation(Location curLocation){
+		this.curLocation = curLocation;
+	}
+
 
 	/**
 	 * Do not implement
