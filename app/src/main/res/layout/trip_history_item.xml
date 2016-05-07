@@ -22,5 +22,4 @@
         android:layout_toRightOf="@+id/tripNameTextView"
         android:layout_toEndOf="@+id/tripNameTextView" />
 
-
 </RelativeLayout>

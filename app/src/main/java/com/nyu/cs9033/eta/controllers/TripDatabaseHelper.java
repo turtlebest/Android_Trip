@@ -1,20 +1,20 @@
-/**
- * Trip database helper for creating the database
- * for the trip app.
- *
- * @author      Jessica Huang
- * @version     1.0
- */
 package com.nyu.cs9033.eta.controllers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * Trip database helper for creating the database
+ * for the trip app.
+ *
+ * @author      Jessica Huang
+ * @version     1.1
+ */
 public class TripDatabaseHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 16;
+    private static final int DATABASE_VERSION = 17;
     private static SQLiteDatabase db;
-    private static final String DATABASE_NAME = "trips16";
+    private static final String DATABASE_NAME = "trips17";
 
     /**
      * Class constructor specifying the context of database, the name

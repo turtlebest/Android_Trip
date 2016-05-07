@@ -1,10 +1,3 @@
-/**
- * Trip database helper for creating the database
- * for the trip app.
- *
- * @author      Jessica Huang
- * @version     1.0
- */
 package com.nyu.cs9033.eta.controllers;
 
 import android.app.Activity;
@@ -30,6 +23,12 @@ import java.util.Iterator;
 import com.nyu.cs9033.eta.R;
 import com.nyu.cs9033.eta.models.Trip;
 
+/**
+ * View started trips activity
+ *
+ * @author      Jessica Huang
+ * @version     1.1
+ */
 public class TripHistoryActivity extends Activity {
     private static final String TAG = "TripHistoryActivity";
     // The View items
@@ -54,10 +53,10 @@ public class TripHistoryActivity extends Activity {
                 finish();
             }
         });
-        // Get all trip from database.
+        // Get started trips from database.
         trip = new ArrayList<Trip>();
         db = new LocalDB(getApplicationContext());
-        trip=db.getAllTrips();
+        trip=db.getStartedTrips();
 
         if (trip.size() != 0) {
             // Update the list in the trip history view
@@ -68,7 +67,7 @@ public class TripHistoryActivity extends Activity {
             // and return.
             AlertDialog.Builder dialog = new AlertDialog.Builder
                                                  (TripHistoryActivity.this);
-            dialog.setMessage("Need to create a trip!");
+            dialog.setMessage("Need to start a trip first!");
             dialog.setPositiveButton("Ok",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialoginterface, int i) {
@@ -142,7 +141,7 @@ public class TripHistoryActivity extends Activity {
      */
     public void startViewTripActivity(View view, Trip trip) {
         Intent intent = new Intent(view.getContext(), ViewTripActivity.class);
-        Log.i(TAG, "id" + String.valueOf(trip));
+        Log.i(TAG, "id " + String.valueOf(trip.getTid()));
         intent.putExtra("My trip", trip);
         view.getContext().startActivity(intent);
     }

@@ -1,9 +1,3 @@
-/**
- * View trip activity for trip detail.
- *
- * @author      Jessica Huang
- * @version     1.1
- */
 package com.nyu.cs9033.eta.controllers;
 
 import com.nyu.cs9033.eta.models.Person;
@@ -22,19 +16,26 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * View trip activity for trip detail.
+ *
+ * @author      Jessica Huang
+ * @version     1.2
+ */
 public class ViewTripActivity extends Activity {
 	private static final String TAG = "ViewTripActivity";
     // View items
 	public ListView friend_item_list;
 	ArrayList<HashMap<String, Object>> FriendListContent
 			= new ArrayList<HashMap<String, Object>>();
-	Button backBtn;
+	public LocalDB db;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,15 +44,52 @@ public class ViewTripActivity extends Activity {
 
 		friend_item_list = (ListView) findViewById(R.id.friendListView);
 
-		backBtn = (Button) findViewById(R.id.button5);
+		Button startBtn = (Button) findViewById(R.id.button4);
+		startBtn.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Trip trip = getTrip(getIntent());
+				long tid = trip.getTid();
+				try {
+                    Log.i(TAG, "Start");
+					TripService.updateLocation(getApplicationContext(),true);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				db = new LocalDB(getApplicationContext());
+				db.updateStartedTrip(tid);
+				setMainActivityForCurrentTrip(v, tid);
+			}
+		});
+
+		Button backBtn = (Button) findViewById(R.id.button5);
 		backBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                finish();
-            }
-        });
+			public void onClick(View v) {
+				finish();
+			}
+		});
+
+		Intent intent = getIntent();
+		Button ArrivedBtn = (Button) findViewById(R.id.button6);
+		if (intent.getStringExtra("currentTrip") != null) {
+			ArrivedBtn.setVisibility(View.VISIBLE);
+			ArrivedBtn.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					try {
+						TripService.updateLocation(getApplicationContext(), false);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		} else {
+			ArrivedBtn.setVisibility(View.GONE);
+		}
 
 		Trip trip = getTrip(getIntent());
-        Log.i(TAG, "trip name:"+trip.getName());
+		Log.i(TAG, "trip name:" + trip.getName());
+		if (trip.getStart()) {
+			startBtn.setVisibility(View.GONE);
+		}
 		viewTrip(trip);
 	}
 	
@@ -138,5 +176,12 @@ public class ViewTripActivity extends Activity {
 			}
 		};
 		friend_item_list.setAdapter(listAdapter);
+	}
+
+	public void setMainActivityForCurrentTrip(View view, long tid) {
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.putExtra("trip_id", String.valueOf(tid));
+		startActivityForResult(intent, 0);
+		finish();
 	}
 }

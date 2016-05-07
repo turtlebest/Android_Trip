@@ -23,61 +23,97 @@ ADDED from AndroidManifest.xml:7:5
 		ADDED from AndroidManifest.xml:8:9
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
-uses-permission#android.permission.READ_CONTACTS
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
 ADDED from AndroidManifest.xml:11:5
 	android:name
 		ADDED from AndroidManifest.xml:11:22
-android:uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+uses-permission#android.permission.READ_CONTACTS
+ADDED from AndroidManifest.xml:12:5
+	android:name
+		ADDED from AndroidManifest.xml:12:22
+uses-permission#android.permission.ACCESS_FINE_LOCATION
 ADDED from AndroidManifest.xml:13:5
 	android:name
-		ADDED from AndroidManifest.xml:13:30
-android:uses-permission#android.permission.READ_PHONE_STATE
+		ADDED from AndroidManifest.xml:13:22
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from AndroidManifest.xml:14:5
 	android:name
-		ADDED from AndroidManifest.xml:14:30
-android:uses-permission#android.permission.READ_EXTERNAL_STORAGE
+		ADDED from AndroidManifest.xml:14:22
+uses-permission#android.permission.READ_PHONE_STATE
 ADDED from AndroidManifest.xml:15:5
 	android:name
-		ADDED from AndroidManifest.xml:15:30
+		ADDED from AndroidManifest.xml:15:22
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:16:5
+	android:name
+		ADDED from AndroidManifest.xml:16:22
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:18:5
+	android:name
+		ADDED from AndroidManifest.xml:18:22
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from AndroidManifest.xml:19:5
+	android:name
+		ADDED from AndroidManifest.xml:19:22
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from AndroidManifest.xml:20:5
+	android:name
+		ADDED from AndroidManifest.xml:20:22
 application
-ADDED from AndroidManifest.xml:17:5
+ADDED from AndroidManifest.xml:22:5
 	android:label
-		ADDED from AndroidManifest.xml:20:9
+		ADDED from AndroidManifest.xml:25:9
 	android:allowBackup
-		ADDED from AndroidManifest.xml:18:9
+		ADDED from AndroidManifest.xml:23:9
 	android:icon
-		ADDED from AndroidManifest.xml:19:9
+		ADDED from AndroidManifest.xml:24:9
 	android:theme
-		ADDED from AndroidManifest.xml:21:9
+		ADDED from AndroidManifest.xml:26:9
 activity#com.nyu.cs9033.eta.controllers.MainActivity
-ADDED from AndroidManifest.xml:22:9
+ADDED from AndroidManifest.xml:27:9
 	android:label
-		ADDED from AndroidManifest.xml:24:13
+		ADDED from AndroidManifest.xml:29:13
 	android:name
-		ADDED from AndroidManifest.xml:23:13
+		ADDED from AndroidManifest.xml:28:13
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:25:13
+ADDED from AndroidManifest.xml:30:13
 action#android.intent.action.MAIN
-ADDED from AndroidManifest.xml:26:17
+ADDED from AndroidManifest.xml:31:17
 	android:name
-		ADDED from AndroidManifest.xml:26:25
+		ADDED from AndroidManifest.xml:31:25
 category#android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:28:17
+ADDED from AndroidManifest.xml:33:17
 	android:name
-		ADDED from AndroidManifest.xml:28:27
+		ADDED from AndroidManifest.xml:33:27
 activity#com.nyu.cs9033.eta.controllers.CreateTripActivity
-ADDED from AndroidManifest.xml:31:9
+ADDED from AndroidManifest.xml:36:9
 	android:label
-		ADDED from AndroidManifest.xml:33:13
+		ADDED from AndroidManifest.xml:38:13
 	android:name
-		ADDED from AndroidManifest.xml:32:13
+		ADDED from AndroidManifest.xml:37:13
 activity#com.nyu.cs9033.eta.controllers.ViewTripActivity
-ADDED from AndroidManifest.xml:34:9
+ADDED from AndroidManifest.xml:39:9
 	android:label
-		ADDED from AndroidManifest.xml:36:13
+		ADDED from AndroidManifest.xml:41:13
 	android:name
-		ADDED from AndroidManifest.xml:35:13
+		ADDED from AndroidManifest.xml:40:13
 activity#com.nyu.cs9033.eta.controllers.TripHistoryActivity
-ADDED from AndroidManifest.xml:37:9
+ADDED from AndroidManifest.xml:42:9
 	android:name
-		ADDED from AndroidManifest.xml:37:19
+		ADDED from AndroidManifest.xml:42:19
+activity#com.nyu.cs9033.eta.controllers.TripViewAllActivity
+ADDED from AndroidManifest.xml:43:9
+	android:label
+		ADDED from AndroidManifest.xml:45:13
+	android:name
+		ADDED from AndroidManifest.xml:44:13
+activity#com.nyu.cs9033.eta.controllers.TripUnStartActivity
+ADDED from AndroidManifest.xml:46:9
+	android:label
+		ADDED from AndroidManifest.xml:48:13
+	android:name
+		ADDED from AndroidManifest.xml:47:13
+service#com.nyu.cs9033.eta.controllers.TripService
+ADDED from AndroidManifest.xml:50:9
+	android:name
+		ADDED from AndroidManifest.xml:50:18

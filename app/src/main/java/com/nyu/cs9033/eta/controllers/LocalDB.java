@@ -1,10 +1,3 @@
-/**
- * LocalDB is the class to deal with sql query for
- * the sql lite database in the phone
- *
- * @author      Jessica Huang
- * @version     1.0
- */
 package com.nyu.cs9033.eta.controllers;
 
 import android.content.ContentValues;
@@ -20,6 +13,13 @@ import com.nyu.cs9033.eta.models.Person;
 import com.nyu.cs9033.eta.models.Trip;
 import com.nyu.cs9033.eta.models.Location;
 
+/**
+ * LocalDB is the class to deal with sql query for
+ * the sql lite database in the phone
+ *
+ * @author      Jessica Huang
+ * @version     1.1
+ */
 public class LocalDB {
     private static final String TAG = "LocalDB";
     // Trip table
@@ -28,6 +28,7 @@ public class LocalDB {
     public static final String COLUMN_TRIP_NAME = "trip_Name";
     public static final String COLUMN_TRIP_LOC_ID = "trip_Location_id";
     public static final String COLUMN_TRIP_TIME = "trip_Time";
+    public static final String COLUMN_TRIP_STARTED = "trip_Start";
     // Person table
     public static final String TABLE_PERSON = "person";
     public static final String COLUMN_PER_ID = "_id";
@@ -46,10 +47,11 @@ public class LocalDB {
     public static final String COLUMN_LOC_NAME = "name";
 
     public static final String CREATE_TRIP_TABLE = "create table "  + TABLE_TRIP + "("
-            + COLUMN_TRIP_ID + " integer primary key autoincrement, "
+            + COLUMN_TRIP_ID + " integer primary key, "
             + COLUMN_TRIP_NAME + " text, "
             + COLUMN_TRIP_LOC_ID + " integer references location(_id), "
-            + COLUMN_TRIP_TIME + " text)";
+            + COLUMN_TRIP_TIME + " text, "
+            + COLUMN_TRIP_STARTED + " integer)";
 
     public static final String CREATE_PERSON_TABLE = "create table " + TABLE_PERSON + "("
             + COLUMN_PER_ID + " integer primary key autoincrement, "
@@ -89,15 +91,17 @@ public class LocalDB {
      */
     public Boolean insertTrip(Trip trip) {
         Log.i(TAG, "insertTrip " + trip.getName());
+        Log.i(TAG, "insertTrip " + trip.getTid());
         ContentValues cv = new ContentValues();
+        cv.put(COLUMN_TRIP_ID, trip.getTid());
         cv.put(COLUMN_TRIP_NAME, trip.getName());
         // Get the id of location
         long lid = insertLocation(trip.getLocation());
         cv.put(COLUMN_TRIP_LOC_ID, lid);
         cv.put(COLUMN_TRIP_TIME, trip.getTime());
+        cv.put(COLUMN_TRIP_STARTED, 0);
         // return id of new trip
-        long tid = db.insert(TABLE_TRIP, null, cv);
-        trip.setTid(tid);
+        db.insert(TABLE_TRIP, null, cv);
 
         // Save the person for trip into the database.
         List<Person> list = trip.getFriendList();
@@ -108,7 +112,7 @@ public class LocalDB {
             Log.i(TAG, "insertTrip " + String.valueOf(p.getPid()));
             Log.i(TAG, "insertTrip " + p.getName());
             // Insert the pid and tid into the Attend_Trip table.
-            insertAttend(pid, tid);
+            insertAttend(pid, trip.getTid());
         }
         return true;
     }
@@ -196,23 +200,56 @@ public class LocalDB {
     }
 
     /**
-     * Get all the trips.
+     * Get un started trips.
      *
      * @return The trip list.
      */
-    public List<Trip> getAllTrips() {
+    public List<Trip> getUnStartTrips() {
         List<Trip> tripList = new ArrayList<Trip>();
-        Cursor cursor = db.rawQuery("select * from " + TABLE_TRIP, null);
+        String where = COLUMN_TRIP_STARTED + "= 0";
+
+        // search
+        Cursor cursor = db.query(TABLE_TRIP, null, where, null, null, null, null, null);
         // loop through all query results
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
             Long tid = cursor.getLong(0);
             String name = cursor.getString(1);
             String time = cursor.getString(3);
             long lid = cursor.getLong(2);
+            boolean isStart = (cursor.getInt(4) != 0);
 
             Location loc = getLocation(lid);
             List<Person> friendList = getTripAttend(tid);
-            Trip trip = new Trip(tid, name, loc, time, friendList);
+            Trip trip = new Trip(tid, name, loc, time, friendList, isStart);
+            tripList.add(trip);
+        }
+        cursor.close();
+
+        return tripList;
+    }
+
+    /**
+     * Get started trips.
+     *
+     * @return The trip list.
+     */
+    public List<Trip> getStartedTrips() {
+        List<Trip> tripList = new ArrayList<Trip>();
+        String where = COLUMN_TRIP_STARTED + "= 1";
+
+        // search
+        Cursor cursor = db.query(TABLE_TRIP, null, where, null, null, null, null, null);
+        // loop through all query results
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            Long tid = cursor.getLong(0);
+            String name = cursor.getString(1);
+            String time = cursor.getString(3);
+            long lid = cursor.getLong(2);
+            boolean isStart = (cursor.getInt(4) != 0);
+
+            Location loc = getLocation(lid);
+            List<Person> friendList = getTripAttend(tid);
+            Trip trip = new Trip(tid, name, loc, time, friendList, isStart);
             tripList.add(trip);
         }
         cursor.close();
@@ -241,6 +278,37 @@ public class LocalDB {
         cursor.close();
 
         return personList;
+    }
+
+
+    /**
+     * Get the location object by location id.
+     *
+     * @param id  Location id.
+     * @return    The location object.
+     */
+    public Trip getTrip(long id) {
+        // for return result
+        Trip trip = null;
+        // ID
+        String where = COLUMN_TRIP_ID + "=" + id;
+
+        // search
+        Cursor result = db.query(TABLE_TRIP, null, where, null, null, null, null, null);
+        // if there is a data
+        if (result.moveToFirst()) {
+            Long tid = result.getLong(0);
+            String name = result.getString(1);
+            String time = result.getString(3);
+            long lid = result.getLong(2);
+            boolean isStart = (result.getInt(4) != 0);
+
+            Location loc = getLocation(lid);
+            List<Person> friendList = getTripAttend(tid);
+            trip = new Trip(tid, name, loc, time, friendList, isStart);
+        }
+        result.close();
+        return trip;
     }
 
     /**
@@ -298,5 +366,26 @@ public class LocalDB {
         }
         result.close();
         return loc;
+    }
+
+    /**
+     * Update trip status.
+     *
+     * @param id  Trip id.
+     */
+    public void updateStartedTrip(long id) {
+        // New value for one column
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_TRIP_STARTED, 1);
+
+        // Which row to update, based on the ID
+        String selection = COLUMN_TRIP_ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(id) };
+
+        db.update(
+                TABLE_TRIP,
+                values,
+                selection,
+                selectionArgs);
     }
 }

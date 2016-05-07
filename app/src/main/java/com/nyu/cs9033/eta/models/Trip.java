@@ -1,9 +1,3 @@
-/**
- * Trip model.
- *
- * @author      Jessica Huang
- * @version     1.1
- */
 package com.nyu.cs9033.eta.models;
 
 import android.os.Parcel;
@@ -13,15 +7,22 @@ import android.util.Log;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Trip model.
+ *
+ * @author      Jessica Huang
+ * @version     1.2
+ */
 public class Trip implements Parcelable {
 
-	private static final String TAG = "CreateTrip";
+	private static final String TAG = "Trip";
 
 	private long tid;
 	private String name;
 	private Location location;
 	private String time;
 	private List<Person> friendList;
+	private boolean isStart;
 	
 	/**
 	 * Parcelable creator. Do not modify this function.
@@ -54,7 +55,13 @@ public class Trip implements Parcelable {
 		} else {
 			friendList = null;
 		}
+		isStart = p.readByte() != 0x00;
 	}
+
+	/**
+	 * Create a Trip model object from arguments
+	 */
+	public Trip() {}
 	
 	/**
 	 * Create a Trip model object from arguments
@@ -62,15 +69,16 @@ public class Trip implements Parcelable {
 	 * @param name  Add arbitrary number of arguments to
 	 * instantiate Trip class based on member variables.
 	 */
-	public Trip(long tid, String name, Location location, String time, List<Person> friendList) {
+	public Trip(long tid, String name, Location location, String time,
+				List<Person> friendList, boolean isStart) {
 		this.tid = tid;
 		this.name = name;
 		this.location = location;
 		this.time = time;
 		this.friendList = friendList;
-		//Log.i(TAG,"aaa");
-		Log.i(TAG,"trip name:" + name);
-		Log.i(TAG,"trip time:" + time);
+		this.isStart = isStart;
+		Log.i(TAG, "trip name:" + name);
+		Log.i(TAG, "trip time:" + time);
 	}
 
 	/**
@@ -98,6 +106,8 @@ public class Trip implements Parcelable {
 			dest.writeByte((byte) (0x01));
 			dest.writeList(friendList);
 		}
+		dest.writeByte((byte) (isStart ? 0x01 : 0x00));
+
 	}
 
 	/**
@@ -123,25 +133,18 @@ public class Trip implements Parcelable {
 		return location;
 	}
 
-	public void setLocation(Location location){
-		this.location = location;
-	}
-
 	public String getTime(){
 		return time;
-	}
-
-	public void setTime(String time){
-		this.time = time;
 	}
 
 	public List<Person> getFriendList(){
 		return friendList;
 	}
 
-	public void setFriendList(List<Person> friendList){
-		this.friendList = friendList;
+	public boolean getStart(){
+		return isStart;
 	}
+
 
 	/**
 	 * Do not implement

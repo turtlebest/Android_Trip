@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.nyu.cs9033.eta.controllers.TripHistoryActivity">
+    tools:context="com.nyu.cs9033.eta.controllers.TripHistoryActivity"
+    android:background = "@drawable/background2">
 
 
     <ListView

@@ -22,5 +22,4 @@
         android:layout_toRightOf="@+id/tripNameTextView"
         android:layout_toEndOf="@+id/tripNameTextView" />
 
-
 </RelativeLayout><!-- From: file:/Users/jessicahuang/Documents/workspace/ETA_CS9033_HuangShuoWen/app/src/main/res/layout/trip_history_item.xml -->
